@@ -1,6 +1,6 @@
 import { TextLine } from 'vscode';
 
-export type Action = (type: PresetId, line: TextLine, lang: string) => void;
+export type Action = (type: PresetId, lang: string) => void;
 
 export type PresetId = 'subheader' | 'mainHeader' | 'line';
 

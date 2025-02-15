@@ -1,21 +1,37 @@
-import { commands, TextEditorEdit, window } from 'vscode';
+import { commands, TextEditorEdit, TextLine, window } from 'vscode';
 
 import { render } from './renders';
 import { checkEmptyLine } from './errors';
 import { Action } from './types';
 
-export const insertDividerAction: Action = (type, line, lang) => {
-  if (type === 'mainHeader' || type === 'subheader') {
-    checkEmptyLine(line);
+const insertDividerAction: Action = (type, lang) => {
+  const editor = window.activeTextEditor;
+  if (!editor) return;
+
+  const lines: TextLine[] = [];
+  for (const selection of editor.selections) {
+    if (!selection.isSingleLine) continue;
+
+    const line = editor.document.lineAt(selection.active.line);
+    lines.push(line);
   }
 
-  const content = render(type, line.text, lang);
+  if (type === 'mainHeader' || type === 'subheader') {
+    for (const line of lines) {
+      checkEmptyLine(line);
+    }
+  }
 
   window.activeTextEditor
     .edit((textEditorEdit: TextEditorEdit) => {
-      textEditorEdit.replace(line.range, content);
+      for (const line of lines) {
+        const content = render(type, line.text, lang);
+        textEditorEdit.replace(line.range, content);
+      }
     })
     .then(() => {
       commands.executeCommand('cursorEnd');
     });
 };
+
+export default insertDividerAction;
