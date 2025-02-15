@@ -1,23 +1,8 @@
-import { window, TextEditor, TextLine } from 'vscode';
+import { window } from 'vscode';
 
 import { handleError } from './errors';
 import insertDividerAction from './actions';
 import { PresetId } from './types';
-
-const getEditorState = (editor: TextEditor) => {
-  const selection = editor.selection;
-
-  // checkMultiLineSelection(selection);
-
-  const document = editor.document;
-  const lang = document.languageId;
-  const line = document.lineAt(selection.active.line);
-
-  return {
-    line,
-    lang
-  };
-};
 
 const generateCommand = (type: PresetId) => () => {
   try {
