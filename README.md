@@ -1,10 +1,14 @@
 <p align="center">
-  <img alt="Comment Divider" src="https://github.com/stackbreak/comment-divider/raw/master/img/logo_256.png" width="20%"  />
+  <img alt="Comment Divider Updated" src="https://github.com/northisup/comment-divider-updated/raw/master/img/logo_256.png" width="20%"  />
 </p>
 
 <h1 align="center">
-  Comment Divider
+  Comment Divider Updated
 </h1>
+
+> Note: this is a fork of [comment-divider](https://marketplace.visualstudio.com/items?itemName=stackbreak.comment-divider) which has not been updated in several years.
+>
+> This fork provides multi-cursor support and will encorperate other pull requests if needed
 
 This is **[Visual Studio Code](https://github.com/Microsoft/vscode)** extension, which provides commands for generating comment-wrapped separators from line content.
 
@@ -12,7 +16,7 @@ This is **[Visual Studio Code](https://github.com/Microsoft/vscode)** extension,
 
 ## Install
 
-https://marketplace.visualstudio.com/items?itemName=stackbreak.comment-divider
+https://marketplace.visualstudio.com/items?itemName=northisup.comment-divider-updated
 
 ## Demo
 
@@ -175,4 +179,4 @@ The example above defines the right characters for `toml` and overrides `scss` d
 
 ## Issues
 
-Request features and report bugs using [GitHub](https://github.com/stackbreak/comment-divider/issues).
+Request features and report bugs using [GitHub](https://github.com/northisup/comment-divider/issues).

@@ -2,6 +2,12 @@
 
 All notable changes to the "Comment Divider" extension will be documented in this file.
 
+## [0.5.0] - 2025-02-16
+
+### Fixed
+
+- Added multi cursor support by [northisup](https://github.com/northisup)
+
 ## [0.4.0] - 2020-05-18
 
 ### Enhancement
