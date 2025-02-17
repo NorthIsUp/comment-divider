@@ -181,6 +181,7 @@
   "main": "./out/extension",
   "scripts": {
     "vsce:build": "./node_modules/.bin/vsce package",
+    "vsce:publish": "./node_modules/.bin/vsce publish",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./ && node scripts/esbuild.js",
     "watch": "tsc -watch -p ./",
