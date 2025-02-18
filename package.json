@@ -6,6 +6,16 @@
   "publisher": "northisup",
   "license": "GPL-3.0",
   "icon": "img/logo_256.png",
+  "scripts": {
+    "vsce:build": "bun vsce package",
+    "vsce:publish": "bun vsce publish",
+    "install-extension": "code --install-extension",
+    "vscode:prepublish": "bun compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "bun compile # && bun lint",
+    "test": "jest # && bun vscode-test"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/northisup/comment-divider"
@@ -25,11 +35,6 @@
     "separator",
     "divider",
     "section"
-  ],
-  "activationEvents": [
-    "onCommand:comment-divider.makeSubHeader",
-    "onCommand:comment-divider.makeMainHeader",
-    "onCommand:comment-divider.insertSolidLine"
   ],
   "contributes": {
     "commands": [
@@ -179,16 +184,6 @@
     }
   },
   "main": "./out/extension",
-  "scripts": {
-    "vsce:build": "./node_modules/.bin/vsce package",
-    "vsce:publish": "./node_modules/.bin/vsce publish",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "yarn run compile # && yarn run lint",
-    "test": "jest ; # /*vscode-test*/"
-  },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/mocha": "^10.0.10",
@@ -198,6 +193,7 @@
     "@typescript-eslint/parser": "^8.24.1",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.2.2",
     "typescript": "^5.7.3"
   },
   "prettier": {
