@@ -2,7 +2,7 @@
   "name": "comment-divider-updated",
   "displayName": "Comment Divider Updated",
   "description": "Divide your code by sections with styled separators.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "publisher": "northisup",
   "license": "GPL-3.0",
   "icon": "img/logo_256.png",
@@ -14,7 +14,7 @@
     "url": "https://github.com/northisup/comment-divider/issues"
   },
   "engines": {
-    "vscode": "^1.28.0"
+    "vscode": "^1.97.0"
   },
   "categories": [
     "Other",
@@ -182,19 +182,40 @@
   "scripts": {
     "vsce:build": "./node_modules/.bin/vsce package",
     "vsce:publish": "./node_modules/.bin/vsce publish",
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./ && node scripts/esbuild.js",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "pretest": "yarn run compile # && yarn run lint",
+    "test": "jest ; # /*vscode-test*/"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0",
-    "prettier": "^2.2.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^4.1.2",
-    "typescript-tslint-plugin": "^0.3.1",
-    "vscode": "^1.1.26",
-    "@vscode/vsce": "^3.2.2"
+    "@jest/globals": "^29.7.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.13.4",
+    "@types/vscode": "^1.97.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "typescript": "^5.7.3"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "embeddedLanguageFormatting": "auto",
+    "htmlWhitespaceSensitivity": "css",
+    "jsxBracketSameLine": true,
+    "printWidth": 120,
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "semi": true,
+    "singleAttributePerLine": true,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   }
 }

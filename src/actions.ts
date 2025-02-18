@@ -1,8 +1,8 @@
-import { commands, TextEditorEdit, TextLine, window } from 'vscode';
+import { commands, type TextEditorEdit, type TextLine, window } from 'vscode';
 
 import { render } from './renders';
 import { checkEmptyLine } from './errors';
-import { Action } from './types';
+import type { Action } from './types';
 
 const insertDividerAction: Action = (type, lang) => {
   const editor = window.activeTextEditor;

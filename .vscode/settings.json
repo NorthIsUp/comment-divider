@@ -14,5 +14,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "[markdown]": {
     "editor.formatOnSave": false
+  },
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   }
 }

@@ -2,7 +2,7 @@ import { getConfig } from './config';
 import { checkLongText, checkCommentChars, checkFillerLen } from './errors';
 import { BUILDERS_MAP, buildSolidLine } from './builders';
 import { TRANSFORM_MAP } from './transforms';
-import { PresetId, IConfig } from './types';
+import type { PresetId, IConfig } from './types';
 
 const extractIndent = (rawText: string): string => rawText.split(/\S+/)[0];
 

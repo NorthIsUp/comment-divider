@@ -1,27 +1,26 @@
-import { GAP_SYM, NEW_LINE_SYM } from './constants';
-import { IWordsAnchors, IConfig, CharList, Align, Height } from './types';
+import { GAP_SYM, NEW_LINE_SYM } from "./constants";
+import type { IWordsAnchors, IConfig, CharList, Align, Height } from "./types";
 
-const buildBlankCharList = (lineLen: number, filler: string): CharList =>
-  Array(lineLen).fill(filler);
+const buildBlankCharList = (lineLen: number, filler: string): CharList => Array(lineLen).fill(filler);
 
-const charListToString = (charList: CharList) => charList.join('');
+const charListToString = (charList: CharList) => charList.join("");
 
 const isEven = (num: number) => num % 2 === 0;
 
 const getCenterAlignedAnchors = (words: string, charList: CharList): IWordsAnchors => {
-  const smartRound =
-    !isEven(words.length) && !isEven(charList.length) ? Math.floor : Math.ceil;
+  const wordsArray = Array.from(words);
+  const smartRound = !isEven(wordsArray.length) && !isEven(charList.length) ? Math.floor : Math.ceil;
   const halfLen = smartRound(charList.length / 2);
-  const halfWord = Math.floor(words.length / 2);
+  const halfWord = Math.floor(wordsArray.length / 2);
   const leftAnchor = halfLen - halfWord;
-  const rightAnchor = leftAnchor + (words.length - 1);
+  const rightAnchor = leftAnchor + (wordsArray.length - 1);
 
   return { leftAnchor, rightAnchor };
 };
 
 const getLeftAlignedAnchors = (words: string, charList: CharList): IWordsAnchors => {
+  const wordsArray = Array.from(words);
   let leftAnchor: number;
-  let rightAnchor: number;
 
   for (const idx of Object.keys(charList)) {
     if (charList[idx] === GAP_SYM) {
@@ -30,13 +29,13 @@ const getLeftAlignedAnchors = (words: string, charList: CharList): IWordsAnchors
     }
   }
 
-  rightAnchor = leftAnchor + (words.length - 1);
+  const rightAnchor = leftAnchor + (wordsArray.length - 1);
 
   return { leftAnchor, rightAnchor };
 };
 
 const getRightAlignedAnchors = (words: string, charList: CharList): IWordsAnchors => {
-  let leftAnchor: number;
+  const wordsArray = Array.from(words);
   let rightAnchor: number;
 
   const last = charList.length - 1;
@@ -48,64 +47,59 @@ const getRightAlignedAnchors = (words: string, charList: CharList): IWordsAnchor
     }
   }
 
-  leftAnchor = rightAnchor - (words.length - 1);
+  const leftAnchor = rightAnchor - (wordsArray.length - 1);
 
   return { leftAnchor, rightAnchor };
 };
 
-const getWordsAnchors = (
-  align: Align,
-  words: string,
-  charList: CharList
-): IWordsAnchors => {
+const getWordsAnchors = (align: Align, words: string, charList: CharList): IWordsAnchors => {
   switch (align) {
-    case 'center':
+    case "center":
       return getCenterAlignedAnchors(words, charList);
-    case 'left':
+    case "left":
       return getLeftAlignedAnchors(words, charList);
-    case 'right':
+    case "right":
       return getRightAlignedAnchors(words, charList);
   }
 };
 
-export const withLimiters = (leftLim: string, rightLim: string) => (
-  charList: CharList
-): CharList => {
-  const rightLimAnchor = charList.length - rightLim.length;
+export const withLimiters =
+  (leftLim: string, rightLim: string) =>
+  (charList: CharList): CharList => {
+    const rightLimAnchor = charList.length - rightLim.length;
 
-  return charList.map((char, i) => {
-    // Insert left limiter
-    if (i < leftLim.length) return leftLim[i];
-    // Insert right limiter
-    else if (i >= rightLimAnchor) return rightLim[i - rightLimAnchor];
-    // Insert gaps after/before non-empty limiters
-    else if (
-      (leftLim.length && i === leftLim.length) ||
-      (rightLim.length && i === rightLimAnchor - 1)
-    )
-      return GAP_SYM;
-    // Pass other chars
-    else return char;
-  });
-};
+    return charList.map((char, i) => {
+      // Insert left limiter
+      if (i < leftLim.length) return leftLim[i];
+      // Insert right limiter
+      if (i >= rightLimAnchor) return rightLim[i - rightLimAnchor];
+      // Insert gaps after/before non-empty limiters
+      if ((leftLim.length && i === leftLim.length) || (rightLim.length && i === rightLimAnchor - 1)) return GAP_SYM;
+      // Pass other chars
+      return char;
+    });
+  };
 
-export const withWords = (align: Align, words: string) => (
-  charList: CharList
-): CharList => {
-  const { leftAnchor, rightAnchor } = getWordsAnchors(align, words, charList);
+export const withWords =
+  (align: Align, words: string) =>
+  (charList: CharList): CharList => {
+    const wordsArray = Array.from(words);
+    const { leftAnchor, rightAnchor } = getWordsAnchors(align, words, charList);
 
-  return charList.map((char, i) => {
-    // Insert words
-    if (i >= leftAnchor && i <= rightAnchor) return words[i - leftAnchor];
-    // Insert gaps before/after words
-    else if (i === leftAnchor - 1 || i === rightAnchor + 1) return GAP_SYM;
-    // Pass other chars
-    else return char;
-  });
-};
+    return charList.map((char, i) => {
+      // Insert words
+      if (i >= leftAnchor && i <= rightAnchor) return wordsArray[i - leftAnchor];
+      // Insert gaps before/after words
+      if (i === leftAnchor - 1 || i === rightAnchor + 1) return GAP_SYM;
+      // Pass other chars
+      return char;
+    });
+  };
 
-const composeInjectors = (...injectors) => (charList: CharList) =>
-  injectors.reduce((res: CharList, injector) => injector(res), charList);
+const composeInjectors =
+  (...injectors) =>
+  (charList: CharList) =>
+    injectors.reduce((res: CharList, injector) => injector(res), charList);
 
 /**
  * Builder functions.
@@ -120,11 +114,7 @@ export const buildSolidLine = (config: IConfig, leftIndent: string): string => {
   return leftIndent + charListToString(computedCharList);
 };
 
-export const buildWordsLine = (
-  config: IConfig,
-  transformedWords: string,
-  leftIndent: string
-): string => {
+export const buildWordsLine = (config: IConfig, transformedWords: string, leftIndent: string): string => {
   const injectLimiters = withLimiters(config.limiters.left, config.limiters.right);
   const injectWords = withWords(config.align, transformedWords);
 
@@ -134,11 +124,7 @@ export const buildWordsLine = (
   return leftIndent + charListToString(computedCharList);
 };
 
-export const buildBlock = (
-  config: IConfig,
-  transformedWords: string,
-  leftIndent: string
-): string => {
+export const buildBlock = (config: IConfig, transformedWords: string, leftIndent: string): string => {
   const textConfig: IConfig = { ...config, sym: GAP_SYM };
   const topLine = buildSolidLine(config, leftIndent);
   const textLine = buildWordsLine(textConfig, transformedWords, leftIndent);
@@ -147,7 +133,9 @@ export const buildBlock = (
   return topLine + NEW_LINE_SYM + textLine + NEW_LINE_SYM + bottomLine;
 };
 
-export const BUILDERS_MAP: { [key in Height]: any } = {
+export const BUILDERS_MAP: {
+  [key in Height]: (config: IConfig, transformedWords: string, leftIndent: string) => string;
+} = {
   block: buildBlock,
-  line: buildWordsLine
+  line: buildWordsLine,
 };
