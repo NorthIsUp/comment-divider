@@ -27,6 +27,7 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
     case 'typescriptreact':
       return wrapLimiters('/*', '*/');
 
+    case 'ansible':
     case 'bash':
     case 'coffeescript':
     case 'dockerfile':
@@ -39,6 +40,8 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
     case 'perl6':
     case 'powershell':
     case 'properties':
+    case 'puppet':
+    case 'puppetfile':
     case 'python':
     case 'r':
     case 'ruby':
@@ -88,6 +91,9 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
 
     case 'plaintext':
       return wrapLimiters('#', '#');
+    
+    case 'ansible-jinja':
+      return wrapLimiters('{#', '#}');
 
     default:
       return wrapLimiters('/*', '*/');
