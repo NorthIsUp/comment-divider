@@ -20,16 +20,19 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
     case 'php':
     case 'sass':
     case 'scala':
-    case 'stylus':
     case 'sql':
+    case 'stylus':
     case 'swift':
     case 'typescript':
     case 'typescriptreact':
       return wrapLimiters('/*', '*/');
 
+    case 'ansible':
     case 'bash':
-    case 'dockerfile':
     case 'coffeescript':
+    case 'dockerfile':
+    case 'gdscript':
+    case 'home-assistant':
     case 'ignore':
     case 'julia':
     case 'makefile':
@@ -37,6 +40,8 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
     case 'perl6':
     case 'powershell':
     case 'properties':
+    case 'puppet':
+    case 'puppetfile':
     case 'python':
     case 'r':
     case 'ruby':
@@ -44,8 +49,6 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
     case 'shellscript':
     case 'yaml':
     case 'yml':
-    case 'home-assistant':
-    case 'gdscript':
       return wrapLimiters('#', '#');
 
     case 'html':
@@ -57,10 +60,10 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
       return wrapLimiters('<!--', '-->');
 
     case 'clojure':
-    case 'lisp':
-    case 'scheme':
     case 'ini':
+    case 'lisp':
     case 'rainmeter':
+    case 'scheme':
       return wrapLimiters(';', ';');
 
     case 'elm':
@@ -88,6 +91,9 @@ const getLanguageDefaultLimiters = (lang?: string): ILimiters => {
 
     case 'plaintext':
       return wrapLimiters('#', '#');
+    
+    case 'ansible-jinja':
+      return wrapLimiters('{#', '#}');
 
     default:
       return wrapLimiters('/*', '*/');
